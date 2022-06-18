@@ -1,0 +1,460 @@
+1}
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int a[20],b[30],i,j,k,count,n;
+    printf("Enter frame size :");
+    scanf("%d",&n);
+    printf("Enter the frame in the form of 0 and 1 :");
+    for(i=0; i<n; i++)
+        scanf("%d",&a[i]);
+    i=0;
+    count=1;
+    j=0;
+    while(i<n)
+    {
+        if(a[i]==1)
+        {
+            b[j]=a[i];
+            for(k=i+1; a[k]==1 && k<n && count<5; k++)
+            {
+                j++;
+                b[j]=a[k];
+                count++;
+                if(count==5)
+                {
+                    j++;
+                    b[j]=0;
+                }
+                i=k;
+            }
+        }
+        else
+        {
+            b[j]=a[i];
+        }
+        i++;
+        j++;
+    }
+    printf("After Bit Stuffing :");
+    for(i=0; i<j; i++)
+        printf("%d",b[i]);
+    return 0;
+}
+
+3}}
+#include <bits/stdc++.h>
+using namespace std;
+#define DELIM "."
+ 
+
+bool valid_part(char* s)
+{
+    int n = strlen(s);
+     
+    
+    if (n > 3)
+        return false;
+     
+    
+    for (int i = 0; i < n; i++)
+        if ((s[i] >= '0' && s[i] <= '9') == false)
+            return false;
+    string str(s);
+     
+    
+    if (str.find('0') == 0 && n > 1)
+        return false;
+    stringstream geek(str);
+    int x;
+    geek >> x;
+     
+    
+    return (x >= 0 && x <= 255);
+}
+ 
+
+int is_valid_ip(char* ip_str)
+{
+    
+    if (ip_str == NULL)
+        return 0;
+    int i, num, dots = 0;
+    int len = strlen(ip_str);
+    int count = 0;
+     
+
+    for (int i = 0; i < len; i++)
+        if (ip_str[i] == '.')
+            count++;
+    if (count != 3)
+        return false;
+     
+   
+   
+    char *ptr = strtok(ip_str, DELIM);
+    if (ptr == NULL)
+        return 0;
+ 
+    while (ptr) {
+ 
+       
+        if (valid_part(ptr))
+        {
+            
+            ptr = strtok(NULL, ".");
+            if (ptr != NULL)
+                ++dots;
+        }
+        else
+            return 0;
+    }
+ 
+    
+    if (dots != 3)
+        return 0;
+    return 1;
+}
+ 
+// Driver code
+int main()
+{
+    char ip1[] = "192.168.4.1";
+    char ip2[] = "172.16.253.1";
+    char ip3[] = "192.800.100.1";
+    char ip4[] = "125.512.100.abc";
+    is_valid_ip(ip1) ? cout<<"Valid\n" : cout<<"Not valid\n";
+    is_valid_ip(ip2) ? cout<<"Valid\n" : cout<<"Not valid\n";
+    is_valid_ip(ip3) ? cout<<"Valid\n" : cout<<"Not valid\n";
+    is_valid_ip(ip4) ? cout<<"Valid\n" : cout<<"Not valid\n";
+    return 0;
+}
+
+4}
+#include <stdio.h>
+#include <string.h>
+ 
+
+void extractIpAddress(unsigned char *sourceString,short *ipAddress)
+{
+    unsigned short len=0;
+    unsigned char  oct[4]={0},cnt=0,cnt1=0,i,buf[5];
+ 
+    len=strlen(sourceString);
+    for(i=0;i<len;i++)
+    {
+        if(sourceString[i]!='.'){
+            buf[cnt++] =sourceString[i];
+        }
+        if(sourceString[i]=='.' || i==len-1){
+            buf[cnt]='\0';
+            cnt=0;
+            oct[cnt1++]=atoi(buf);
+        }
+    }
+    ipAddress[0]=oct[0];
+    ipAddress[1]=oct[1];
+    ipAddress[2]=oct[2];
+    ipAddress[3]=oct[3];
+}
+
+int main()
+{
+    unsigned char ip[20]={0};
+    short ipAddress[4];
+     
+    printf("Enter IP Address (xxx.xxx.xxx.xxx format): ");
+    scanf("%s",ip);
+     
+    extractIpAddress(ip,&ipAddress[0]);
+     
+    printf("\nIp Address: %03d. %03d. %03d. %03d\n",ipAddress[0],ipAddress[1],ipAddress[2],ipAddress[3]);
+    
+    if(ipAddress[0]>=0 && ipAddress[0]<=127)
+        printf("Class A Ip Address.\n");
+    if(ipAddress[0]>127 && ipAddress[0]<191)
+        printf("Class B Ip Address.\n");
+    if(ipAddress[0]>191 && ipAddress[0]<224)
+        printf("Class C Ip Address.\n");
+    if(ipAddress[0]>224 && ipAddress[0]<=239)
+        printf("Class D Ip Address.\n");
+    if(ipAddress[0]>239)
+        printf("Class E Ip Address.\n");
+     
+    return 0;
+}
+
+
+5}}
+#include <iostream>
+#include <string.h>
+#include <stack>
+#include <vector>
+#include <math.h>
+ 
+using namespace std;
+  
+vector<int> bina(vector<string> str)
+    {
+    vector<int> re(32,0);
+        int a, b, c, d, i, rem;
+        a = b = c = d = 1;
+        stack<int> st;
+ 
+      
+ 
+            a = stoi(str[0]);
+            b = stoi(str[1]);
+            c = stoi(str[2]);
+            d = stoi(str[3]);
+ 
+      
+        for (i = 0; i <= 7; i++)
+        {
+            rem = a % 2;
+            st.push(rem);
+            a = a / 2;
+        }
+ 
+       
+        for (i = 0; i <= 7; i++) {
+            re[i] = st.top();
+            st.pop();
+        }
+ 
+      
+        for (i = 8; i <= 15; i++) {
+            rem = b % 2;
+            st.push(rem);
+            b = b / 2;
+        }
+ 
+       
+        for (i = 8; i <= 15; i++) {
+            re[i] = st.top();
+            st.pop();
+        }
+ 
+       
+        for (i = 16; i <= 23; i++) {
+            rem = c % 2;
+            st.push(rem);
+            c = c / 2;
+        }
+ 
+    
+        for (i = 16; i <= 23; i++) {
+            re[i] = st.top();
+            st.pop();
+        }
+ 
+      
+        for (i = 24; i <= 31; i++) {
+            rem = d % 2;
+            st.push(rem);
+            d = d / 2;
+        }
+ 
+      
+        for (i = 24; i <= 31; i++) {
+            re[i] = st.top();
+            st.pop();
+        }
+ 
+        return (re);
+    }
+ 
+  
+char cls(vector<string> str)
+    {
+        int a = stoi(str[0]);
+        if (a >= 0 && a <= 127)
+            return ('A');
+        else if (a >= 128 && a <= 191)
+            return ('B');
+        else if (a >= 192 && a <= 223)
+            return ('C');
+        else if (a >= 224 && a <= 239)
+            return ('D');
+        else
+            return ('E');
+    }
+ 
+    
+vector<int> deci(vector<int> bi)
+    {
+ 
+        vector<int> arr(4,0);
+        int a, b, c, d, i, j;
+        a = b = c = d = 0;
+        j = 7;
+ 
+        for (i = 0; i < 8; i++) {
+ 
+            a = a + (int)(pow(2, j)) * bi[i];
+            j--;
+        }
+ 
+        j = 7;
+        for (i = 8; i < 16; i++) {
+ 
+            b = b + bi[i] * (int)(pow(2, j));
+            j--;
+        }
+ 
+        j = 7;
+        for (i = 16; i < 24; i++) {
+ 
+            c = c + bi[i] * (int)(pow(2, j));
+            j--;
+        }
+ 
+        j = 7;
+        for (i = 24; i < 32; i++) {
+ 
+            d = d + bi[i] * (int)(pow(2, j));
+            j--;
+        }
+ 
+        arr[0] = a;
+        arr[1] = b;
+        arr[2] = c;
+        arr[3] = d;
+        return arr;
+    }
+ 
+int main()
+    {
+ 
+ 
+        string ipr = "192.168.1.1/24";
+ 
+        
+        cout<<"IP address CIDR format is:"<< ipr;
+ 
+        // Separate IP address and n
+        string str1 = "";
+        int idx = 0;
+        int len = ipr.size();
+        len -= 3;
+        while(len--){
+            str1 += ipr[idx];
+            idx++;
+        }
+        cout<<endl;
+        cout<<"IP Address : " <<str1<<endl;
+ 
+        string str2 = "";
+        idx++;
+        str2 += ipr[idx];
+        idx++;
+        str2 += ipr[idx];
+        cout<<"Value of n : "<< str2<<endl;
+        
+        string tr = str1;
+ 
+        
+        vector<string> str;
+ 
+        string temp;
+        int n = tr.size();
+        for(int i = 0; i < n; i++){
+            if(tr[i] >= 48 && tr[i] <= 57)
+                temp +=tr[i];
+            else{
+                str.push_back(temp);
+                temp = "";
+            }
+        }
+        str.push_back(temp);
+    
+ 
+        vector<int> b;
+ 
+        cout<<endl;
+ 
+      
+        b = bina(str);
+ 
+        n = stoi(str2);
+        vector<int> ntwk(32,0);
+        vector<int> brd(32,0);
+        int t = 32 - n;
+ 
+        for (int i = 0; i <= (31 - t); i++) {
+ 
+            ntwk[i] = b[i];
+            brd[i] = b[i];
+        }
+ 
+      
+        for (int i = 31; i > (31 - t); i--) {
+ 
+            ntwk[i] = 0;
+        }
+ 
+        
+        for (int i = 31; i > (31 - t); i--) {
+ 
+            brd[i] = 1;
+        }
+ 
+        cout<<endl;
+ 
+       
+        char c = cls(str);
+        cout<<"Class : " << c << endl;
+ 
+       
+        vector<int> nt = deci(ntwk);
+ 
+       
+        vector<int> br = deci(brd);
+ 
+      
+        cout<<"First Address : " << nt[0] << "." <<nt[1] <<"." << nt[2] <<"." << nt[3]<<endl;
+ 
+       
+        cout<<"Last Address : "  <<br[0] << "." <<br[1] << "." << br[2] <<"." << br[3] << endl;
+ 
+       
+        cout<<"Total Number of Addresses :" <<br[3]-nt[3]+1<<endl;
+ 
+        return 0;
+}
+
+2}}
+    #include<stdio.h>
+    #include<string.h>
+    int main()
+    {
+            char a[30], fs[50] = " ", t[3], sd, ed, x[3], s[3], d[3], y[3];
+            int i, j, p = 0, q = 0;
+            clrscr();
+            printf("Enter characters to be stuffed:");
+            scanf("%s", a);
+            printf("\nEnter a character that represents starting delimiter:");
+            scanf(" %c", &sd);
+            printf("\nEnter a character that represents ending delimiter:");
+            scanf(" %c", &ed);
+            x[0] = s[0] = s[1] = sd;
+            x[1] = s[2] = '\0';
+            y[0] = d[0] = d[1] = ed;
+            d[2] = y[1] = '\0';
+            strcat(fs, x);
+            for(i = 0; i < strlen(a); i++)
+            {
+                t[0] = a[i];
+                t[1] = '\0';
+                if(t[0] == sd)
+                    strcat(fs, s);
+                else if(t[0] == ed)
+                    strcat(fs, d);
+                else
+                    strcat(fs, t);
+            }
+            strcat(fs, y);
+            printf("\n After stuffing:%s", fs);
+            getch();
+        }
